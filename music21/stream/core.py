@@ -83,6 +83,11 @@ class StreamCore(Music21Object):
         A faster way of inserting elements that performs no checks,
         just insertion.
 
+        If `ignoreSort` is True then the inserting does not
+        change whether the Stream is sorted or not (much faster if you're
+        going to be inserting dozens
+        of items that don't change the sort status)
+
         Only be used in contexts that we know we have a proper, single Music21Object.
         Best for usage when taking objects in a known Stream and creating a new Stream
 
