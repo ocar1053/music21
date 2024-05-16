@@ -2215,16 +2215,10 @@ class Stream(core.StreamCore, t.Generic[M21ObjType]):
                offsetOrItemOrList,
                itemOrNone=None,
                *,
-
                setActiveSite=True
                ):
         '''
         Inserts an item(s) at the given offset(s).
-
-        If `ignoreSort` is True then the inserting does not
-        change whether the Stream is sorted or not (much faster if you're
-        going to be inserting dozens
-        of items that don't change the sort status)
 
         The `setActiveSite` parameter should nearly always be True; only for
         advanced Stream manipulation would you not change
