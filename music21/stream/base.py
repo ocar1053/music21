@@ -2215,7 +2215,7 @@ class Stream(core.StreamCore, t.Generic[M21ObjType]):
                offsetOrItemOrList,
                itemOrNone=None,
                *,
-               ignoreSort=False,
+
                setActiveSite=True
                ):
         '''
@@ -2304,7 +2304,7 @@ class Stream(core.StreamCore, t.Generic[M21ObjType]):
                 offset = offsetOrItemOrList[i]
                 item = offsetOrItemOrList[i + 1]
                 # recursively calling insert() here
-                self.insert(offset, item, ignoreSort=ignoreSort)
+                self.insert(offset, item)
                 i += 2
             return
         # assume first arg is item, and that offset is local offset of object
@@ -2333,14 +2333,14 @@ class Stream(core.StreamCore, t.Generic[M21ObjType]):
 
         storeSorted = self.coreInsert(offset,
                                       element,
-                                      ignoreSort=ignoreSort,
+                                      ignoreSort=False,
                                       setActiveSite=setActiveSite)
         updateIsFlat = False
         if element.isStream:
             updateIsFlat = True
         self.coreElementsChanged(updateIsFlat=updateIsFlat)
-        if ignoreSort is False:
-            self.isSorted = storeSorted
+
+        self.isSorted = storeSorted
 
     def insertIntoNoteOrChord(self, offset, noteOrChord, chordsOnly=False):
         # noinspection PyShadowingNames
@@ -2538,7 +2538,7 @@ class Stream(core.StreamCore, t.Generic[M21ObjType]):
         if removeTarget is not None:
             self.remove(removeTarget)
         # insert normally, nothing to handle
-        self.insert(offset, finalTarget, ignoreSort=False, setActiveSite=True)
+        self.insert(offset, finalTarget, setActiveSite=True)
 
     def append(self, others):
         '''
@@ -10706,7 +10706,7 @@ class Stream(core.StreamCore, t.Generic[M21ObjType]):
                 gapElement = note.Rest()
                 gapQuarterLength = opFrac(eOffset - highestCurrentEndTime)
                 gapElement.duration.quarterLength = gapQuarterLength
-                gapStream.insert(highestCurrentEndTime, gapElement, ignoreSort=True)
+                gapStream.insert(highestCurrentEndTime, gapElement)
             eDur = e.duration.quarterLength
             highestCurrentEndTime = opFrac(max(highestCurrentEndTime, eOffset + eDur))
 
